@@ -1,0 +1,493 @@
+<?php
+session_start();
+include 'connect.php'; // Ensure this file contains the database connection details
+
+// Redirect to login if the user is not logged in
+if (!isset($_SESSION['email'])) {
+    header("Location: PSV-login.php");
+    exit();
+}
+
+// Fetch user details
+$email = $_SESSION['email'];
+$query = mysqli_query($conn, "SELECT * FROM users1 WHERE email='$email'");
+
+// Check if the query returned a valid result
+if ($query && mysqli_num_rows($query) > 0) {
+    $row = mysqli_fetch_array($query);
+} else {
+    // Handle the case where no user data is found
+    $row = null;
+}
+
+// Handle Help Form Submission
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['help_submit'])) {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $message = $_POST['message'];
+    $help_date = date('Y-m-d H:i:s'); // Current date and time
+
+    // Insert data into the help table
+    $query = "INSERT INTO help (name, email, message, help_date) 
+              VALUES ('$name', '$email', '$message', '$help_date')";
+
+    if (mysqli_query($conn, $query)) {
+        echo "<script>alert('Your message has been submitted successfully!');</script>";
+    } else {
+        echo "<script>alert('Error: " . mysqli_error($conn) . "');</script>";
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSV Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        html {
+            scroll-behavior: smooth;
+            scroll-animation: ease-in-out;
+            transition: 3s ease-in-out;
+            -webkit-transition: 3s ease-in-out;
+            -moz-transition: 3s ease-in-out;
+            -ms-transition: 3s ease-in-out;
+            -o-transition: 3s ease-in-out;
+        }
+
+        body {
+            font-family: "Playfair Display", serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            animation: changeBackground 30s infinite; /* 30s for 15 colors */
+        }
+
+        @keyframes changeBackground {
+            0% { background-color: #c0c0c0; } /* Silver */
+            6.66% { background-color: #d4af37; } /* Gold */
+            13.33% { background-color: #cd7f32; } /* Bronze */
+            20% { background-color: #b87333; } /* Copper */
+            26.66% { background-color: #aaa9ad; } /* Platinum */
+            33.33% { background-color: #ff7f50; } /* Coral */
+            40% { background-color: #6495ed; } /* Cornflower Blue */
+            46.66% { background-color: #dc143c; } /* Crimson */
+            53.33% { background-color: #008b8b; } /* Dark Cyan */
+            60% { background-color: #b8860b; } /* Dark Goldenrod */
+            66.66% { background-color: #a9a9a9; } /* Dark Gray */
+            73.33% { background-color: #006400; } /* Dark Green */
+            80% { background-color: #8b008b; } /* Dark Magenta */
+            86.66% { background-color: #556b2f; } /* Dark Olive Green */
+            93.33% { background-color: #ff8c00; } /* Dark Orange */
+            100% { background-color: #c0c0c0; } /* Silver */
+        }
+
+        h1, h2, h3 {
+            font-family: "Cinzel", serif;
+            font-weight: 900;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #8b7355;
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 29px;
+            transition: background-color 2s ease;
+        }
+
+        .btn:hover {
+            background-color: #704006;
+        }
+
+        .header {
+            display: flex;
+            position: sticky;
+            height: 50px; /* Reduced height */
+            top: 0; /* Ensure it sticks to the top */
+            z-index: 1000;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 50px; /* Reduced padding */
+            background-color: black !important;
+            border-radius: 2px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            color: #c27517;
+            cursor: pointer;
+        }
+
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar ul li a {
+            font-size: 16px;
+            color: white;
+            transition: color 0.3s ease;
+        }
+
+        .navbar ul li a:hover {
+            color: #8b7355;
+        }
+
+        .hero-section {
+            background-image: url("images/hero-bg.jpg");
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #030a03;
+        }
+
+        .hero-content h2 {
+            font-size: 48px;
+            color: #000;
+            margin-bottom: 20px;
+        }
+
+        .hero-content p {
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+
+        .collections-section {
+            padding: 50px 20px;
+            text-align: center;
+            height: 850px;
+        }
+
+        .collections-section h2 {
+            font-size: 49px;
+            margin-top: 80px;
+        }
+
+        .collection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .collection-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .collection-item img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .collection-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .viewmore {
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #824b08c7;
+            color: #efe9e9;
+            margin-top: 60px;
+            padding: 30px 60px;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+
+        .viewmore:hover {
+            background-color: #603501;
+        }
+
+        .collection-item h3 {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: #000000;
+            font-size: 24px;
+            padding-bottom: 10px;
+        }
+
+        /* Updated About Section Styles */
+        .about-section {
+            padding: 50px 20px;
+            text-align: center;
+            height: 800px;
+        }
+
+        .about-section h2 {
+            font-size: 49px; /* Increased from 36px */
+            margin-top: 80px;
+        }
+
+        .about-section h3 {
+            font-size: 35px; /* Added to increase subheading size */
+        }
+
+        .about-section p {
+            font-size: 22px; /* Increased from 18px */
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Updated Contact Section Styles */
+        .contact-section {
+            padding: 50px 20px;
+            text-align: center;
+            height: 660px;
+            color: white;
+        }
+
+        .contact-section h2 {
+            font-size: 42px; /* Increased from 36px */
+            margin-top: 60px;
+            color: white;
+        }
+
+        .contact-section h3 {
+            font-size: 28px; /* Added to increase subheading size */
+            color: white;
+        }
+
+        .contact-section p {
+            font-size: 22px; /* Increased from default size */
+            color: white;
+        }
+
+        .contact-section a {
+            font-size: 22px; /* Increased from default size */
+            color: white;
+        }
+
+        .contact-section form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .contact-section input,
+        .contact-section textarea {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .contact-section button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #8b7355;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-section button:hover {
+            background-color: #6b5a45;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer p {
+            font-size: 14px;
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                padding: 10px; /* Adjusted padding for mobile */
+            }
+
+            .navbar ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .hero-content h2 {
+                font-size: 36px;
+            }
+
+            .hero-content p {
+                font-size: 18px;
+            }
+
+            .collections-section h2 {
+                font-size: 28px;
+            }
+
+            .collection-item h3 {
+                font-size: 20px;
+            }
+
+            .about-section h2 {
+                font-size: 28px;
+            }
+
+            .contact-section h2 {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h2 {
+                font-size: 24px;
+            }
+
+            .hero-content p {
+                font-size: 16px;
+            }
+
+            .collections-section h2 {
+                font-size: 24px;
+            }
+
+            .collection-item h3 {
+                font-size: 18px;
+            }
+
+            .about-section h2 {
+                font-size: 24px;
+            }
+
+            .contact-section h2 {
+                font-size: 35px;
+            }
+        }
+
+        .logo img {
+            width: 150px; /* Adjusted width for rectangular shape */
+            height: 75px; /* Adjusted height for rectangular shape */
+            border-radius: 8px; /* Optional: Slightly rounded corners */
+            box-shadow: 0 4px 6px rgba(107, 90, 69, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <!-- Logo -->
+        <div class="logo">
+            <a href="PSV-home.php">
+                <img src="psvlogo1.png" alt="PSV QuickBuy Logo">
+            </a>
+        </div>
+        <nav class="navbar">
+            <ul>
+                <li><a href="PSV-login.php"><b>login</b></a></li>
+                <li><a href="PSV-home.php"><b>Home</b></a></li>
+                <li><a href="PSV-exploremore.html"><b>Collections</b></a></li>
+                <li><a href="#about"><b>About</b></a></li>
+                <li><a href="#contact"><b>Contact Us</b></a></li>
+                <li><a href="#help"><b>Help</b></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero-section">
+        <div class="hero-content">
+            <h2>Timeless Elegance</h2>
+            <?php if ($row): ?>
+                <p><b>Hello, <?php echo $row['firstName'] . " " . $row['lastName']; ?>!</b></p>
+            <?php else: ?>
+               
+            <?php endif; ?>
+            <p><b>PSV Vintage – A Touch of Elegance, A Lifetime of Style.<br>
+                Experience luxury with PSV’s exclusive vintage collection. Explore handpicked vintage classics that never go out of style.<br> Because true style is always in fashion, we bring you timeless elegance. Discover luxury and shop vintage with PSV today!</b></p>
+            <a href="#collections" class="btn"><b>Find Your Style</b></a>
+        </div>
+    </section>
+
+    <section id="collections" class="collections-section">
+        <h2>Collections</h2>
+        <h3>Rare & Refined</h3>
+        <div class="collection-grid">
+            <div class="collection-item">
+                <img src="https://assets.ajio.com/cms/LUXE/WEB/12032025-D-Luxe-OnlyonAjioLuxe-PaulShark.jpg" alt="Collection 1">
+                <h3></h3>
+            </div>
+            <div class="collection-item">
+                <img src="https://assets.ajio.com/cms/LUXE/WEB/12032025-D-Luxe-OnlyonAjioLuxe-JimmyChoo.jpg" alt="Collection 2">
+                <h3></h3>
+            </div>
+            <div class="collection-item">
+                <img src="https://assets.ajio.com/medias/sys_master/root/20230110/23UY/63bd7778aeb269c651d4dc3d/-473Wx593H-4932451770-multi-MODEL.jpg" alt="Handmade Designs">
+                <h3>Casio Edifice</h3>
+            </div>
+            <div class="collection-item">
+                <img src="https://aniportalimages.s3.amazonaws.com/media/details/ANI-20230108041121.jpg" alt="Collection 3">
+                <h3>The Ultimate Blazers</h3>
+            </div>
+        </div>
+        <div class="viewmore">
+            <a href="PSV-exploremore.html"><b>Explore More</b></a>
+        </div>
+    </section>
+
+    <section id="about" class="about-section">
+        <h2>About PSV</h2>
+        <h3>Timeless Fashion, Modern Sensibility</h3>
+        <p><b>PSV is more than just a brand—it is a statement of heritage, exclusivity, and refined taste. Rooted in the artistry of traditional craftsmanship and inspired by modern sophistication, PSV curates a collection that transcends time. From fashion to lifestyle essentials, every PSV creation embodies quality, elegance, and meticulous attention to detail. Whether it’s clothing, accessories, home décor, or luxury goods, PSV is dedicated to offering timeless pieces that define a life of style and distinction.</b></p>
+    </section>
+
+    <!-- Contact Section with Click-to-Call and WhatsApp -->
+    <div id="contact" class="contact-section">
+        <h2>Contact Us</h2>
+        <h3><p>Feel free to reach out to us through any of the following platforms:</p></h3>
+        <p><a href="https://www.instagram.com/premchand__2005?igsh=czQ2amRyMXE4c3dx" target="_blank"><b>Instagram</b></a></p>
+        <p>Mobile: <a href="tel:+918919098339">+91 8919098339</a> <br> <br>
+        <a href="https://wa.me/918919098339" target="_blank">Chat On WhatsApp</a></p>
+    </div>
+
+   <!-- Help Section -->
+<section id="help" class="contact-section">
+    <h2>Help</h2>
+    <form action="" method="post">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <textarea name="message" placeholder="Your Message" required></textarea>
+        <button type="submit" name="help_submit" class="btn">Send Message</button>
+    </form>
+</section>
+
+    <footer class="footer">
+        <p>&copy; 2024 PSV. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // JavaScript for smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

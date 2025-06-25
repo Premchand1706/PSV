@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PSV - Collections</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Cinzel:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+      body {
+        font-family: "Playfair Display", serif;
+        background-color: #af9191;
+        color: #6b5a45;
+        margin: 0;
+        padding: 0;
+      }
+
+      .header {
+        display: flex;
+        position: sticky;
+        height: 50px; /* Reduced height */
+        top: 0; /* Ensure it sticks to the top */
+        z-index: 1000;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 50px; /* Reduced padding */
+        background-color: black !important;
+        border-radius: 2px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .navbar ul {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      .navbar a {
+        text-decoration: none;
+        color: #fdfcfa;
+        font-weight: bold;
+      }
+
+      .collections-section {
+        text-align: center;
+        height: 2000px;
+        padding: 40px;
+      }
+
+      .collection-grid {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .collection-item {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+      }
+
+      .collection-item:hover {
+        transform: scale(1.05);
+      }
+
+      .collection-item img {
+        width: 200px;
+        height: auto;
+        border-radius: 10px;
+      }
+
+      .btn {
+        background-color: #8b7355;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        margin: 5px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        border-radius: 5px;
+      }
+
+      .btn:hover {
+        background-color: #d9953d;
+      }
+
+      .footer {
+        text-align: center;
+        padding: 20px;
+        background-color: #8b7355;
+        color: white;
+      }
+
+      .animated-popup {
+        border: 2px solid #8b7355 !important;
+        border-radius: 15px !important;
+      }
+
+      .custom-title {
+        color: #8b7355 !important;
+        font-family: "Cinzel", serif !important;
+        font-size: 1.5em !important;
+      }
+
+      .custom-confirm,
+      .custom-cancel {
+        font-family: "Playfair Display", serif !important;
+        padding: 12px 24px !important;
+        font-size: 1.1em !important;
+      }
+
+      .custom-swal {
+        padding: 20px;
+        text-align: center;
+      }
+
+      .logo img {
+        width: 150px;
+        height: 75px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(107, 90, 69, 0.2);
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="logo">
+        <a href="PSV-home.html">
+          <img src="psvlogo1.png" alt="PSV QuickBuy Logo" />
+        </a>
+      </div>
+      <nav class="navbar">
+        <ul>
+          <li><a href="PSV-home.php">Home</a></li>
+          <li><a href="#collections">Collections</a></li>
+          <li><a href="PSV-cart.html">Cart</a></li>
+          <li><a href="PSV-orders.html">orders</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <section id="collections" class="collections-section">
+      <h2>Our Exclusive Collections</h2>
+      <div class="collection-grid">
+        <!-- Collection Items -->
+        <div class="collection-item">
+            <img
+            src="https://assets.ajio.com/medias/sys_master/root/20240813/G8n3/66bb54841d763220fa76fbbf/-473Wx593H-410497627-uc001-MODEL.jpg"
+            alt="Vintage Elegance"
+          />
+          <h3>EMPORIO ARMANI</h3>
+          <p>21,199</p>
+          <button class="btn" onclick="addToCart('EMPORIO ARMANI', this.parentElement.querySelector('img').src, 21199)">Add to Cart</button>
+          <button class="btn" onclick="buyNowAndRedirect('EMPORIO ARMANI', this.parentElement.querySelector('img').src,21199)">Buy Now</button>
+        </div>
+        <div class="collection-item">
+          <img
+            src="https://assets.ajio.com/medias/sys_master/root/20230410/7Bw4/6433cf3b711cf97ba716e90f/-473Wx593H-466038109-wine-MODEL.jpg"
+            alt="Luxury Redefined"
+          />
+          <h3>RNG SAFAWALA</h3>
+          <p>26,199</p>
+          <button class="btn" onclick="addToCart('RNG SAFAWALA', this.parentElement.querySelector('img').src, 26199)">Add to Cart</button>
+          <button class="btn" onclick="buyNowAndRedirect('RNG SAFAWALA', this.parentElement.querySelector('img').src,26199)">Buy Now</button>
+        </div>
+        <div class="collection-item">
+          <img
+            src="https://assets.ajio.com/medias/sys_master/root/20240712/eP7c/66914f471d763220fa72c67e/-473Wx593H-410486853-i8r7-MODEL2.jpg"
+            alt="Exclusive Designs"
+          />
+          <h3>
+            BALLY</h3>
+          <p>14,199</p>
+          <button class="btn" onclick="addToCart('BALLY', this.parentElement.querySelector('img').src,14199)">Add to Cart</button>
+          <button class="btn" onclick="buyNowAndRedirect('BALLY', this.parentElement.querySelector('img').src,14199)">Buy Now</button>
+        </div>
+        <div class="collection-item">
+          <img
+            src="https://assets.ajio.com/medias/sys_master/root/20210408/nFnh/606e04aaf997dd7b64a6e253/-473Wx593H-410287117-002-MODEL5.jpg"
+            alt="Handmade Designs"
+          />
+          <h3>ONITSUKA TIGER</h3>
+          <p>3,199</p>
+          <button class="btn" onclick="addToCart('ONITSUKA TIGER', this.parentElement.querySelector('img').src,3199)">Add to Cart</button>
+          <button class="btn" onclick="buyNowAndRedirect('ONITSUKA TIGER', this.parentElement.querySelector('img').src, 3199)">Buy Now</button>
+        </div>
+        <div class="collection-item">
+          <img
+            src="https://assets.ajio.com/medias/sys_master/root/20240306/IUZZ/65e8919e16fd2c6e6a4111de/-473Wx593H-410407482-001-MODEL.jpg"
+            alt="Handmade Designs"
+          />
+          <h3>FERRAGAMO</h3>
+          <p>2,199</p>
+          <button class="btn" onclick="addToCart('FERRAGAMO', this.parentElement.querySelector('img').src,2199)">Add to Cart</button>
+          <button class="btn" onclick="buyNowAndRedirect('FERRAGAMO', this.parentElement.querySelector('img').src, 2199)">Buy Now</button>
+        </div>
+        <div class="collection-item">
+          <img
+            src="https://assets.ajio.com/medias/sys_master/root/20230807/0nZT/64d10260a9b42d15c9937ed1/-473Wx593H-469532200-blue-MODEL.jpg"
+            alt="Handmade Designs"
+          />
+          <h3>
+            ONITSUKA TIGER</h3>
+          <p>19,999</p>
+          <button class="btn" onclick="addToCart('ONITSUKA TIGER', this.parentElement.querySelector('img').src,19999)">Add to Cart</button>
+          <button class="btn" onclick="buyNowAndRedirect('ONITSUKA TIGER', this.parentElement.querySelector('img').src, 19999)">Buy Now</button>
+        </div>
+        <div class="collection-item">
+          <img
+            src="https://assets.ajio.com/medias/sys_master/root/20240108/qxOA/659c17ee74cb305fe00a2f0a/-473Wx593H-410457291-a5f-MODEL.jpg"
+            alt="Handmade Designs"
+          />
+          <h3>COACH</h3>
+          <p>1,199</p>
+          <button class="btn" onclick="addToCart('COACH', this.parentElement.querySelector('img').src,1199)">Add to Cart</button>
+          <button class="btn" onclick="buyNowAndRedirect('COACH', this.parentElement.querySelector('img').src, 1199)">Buy Now</button>
+        </div>
+        <div class="collection-item">
+          <img
+            src="https://assets.ajio.com/medias/sys_master/root/20240717/RsQJ/6697c3316f60443f315fbfb6/-473Wx593H-410487285-olv-MODEL.jpg"
+            alt="Handmade Designs"
+          />
+          <h3>
+            TUMI</h3>
+          <p>13,199</p>
+          <button class="btn" onclick="addToCart('TUMI', this.parentElement.querySelector('img').src,13199)">Add to Cart</button>
+          <button class="btn" onclick="buyNowAndRedirect('TUMI', this.parentElement.querySelector('img').src, 13199)">Buy Now</button>
+        </div>
+        <div class="collection-item">
+          <img
+            src="https://assets.ajio.com/medias/sys_master/root/20240903/PkP2/66d6f95e1d763220fabb3938/-473Wx593H-700049959-white-MODEL.jpg"
+            alt="Handmade Designs"
+          />
+          <h3>
+            ASSEMBLY</h3>
+          <p>8,999</p>
+          <button class="btn" onclick="addToCart('ASSEMBLY', this.parentElement.querySelector('img').src,8999)">Add to Cart</button>
+          <button class="btn" onclick="buyNowAndRedirect('ASSEMBLY', this.parentElement.querySelector('img').src, 8999)">Buy Now</button>
+        </div>
+        <div class="collection-item">
+          <img
+            src="https://assets.ajio.com/medias/sys_master/root/20231031/W060/6541107eddf7791519657f61/-473Wx593H-469564527-gold-MODEL.jpg"
+            alt="Handmade Designs"
+          />
+          <h3>RAY-BAN</h3>
+          <p>1,999</p>
+          <button class="btn" onclick="addToCart('RAY-BAN', this.parentElement.querySelector('img').src,1999)">Add to Cart</button>
+          <button class="btn" onclick="buyNowAndRedirect('RAY-BAN', this.parentElement.querySelector('img').src, 1999)">Buy Now</button>
+        </div>
+        <div class="collection-item">
+          <img
+            src="https://assets.ajio.com/medias/sys_master/root/20230912/Td2i/65007d73ddf7791519d25cc0/-1117Wx1400H-410111594-multi-MODEL6.jpg"
+            alt="Handmade Designs"
+          />
+          <h3>EMPORIO ARMANI</h3>
+          <p>7,699</p>
+          <button class="btn" onclick="addToCart('EMPORIO ARMANI', this.parentElement.querySelector('img').src,7699)">Add to Cart</button>
+          <button class="btn" onclick="buyNowAndRedirect('EMPORIO ARMANI', this.parentElement.querySelector('img').src, 7699)">Buy Now</button>
+        </div>
+        <div class="collection-item">
+          <img
+            src="https://assets.ajio.com/medias/sys_master/root/20230721/MgfX/64ba697eeebac147fc813278/-473Wx593H-466311932-silver-MODEL.jpg"
+            alt="Handmade Designs"
+          />
+          <h3>
+            ORIS</h3>
+          <p>59,999</p>
+          <button class="btn" onclick="addToCart('ORIS', this.parentElement.querySelector('img').src,59999)">Add to Cart</button>
+          <button class="btn" onclick="buyNowAndRedirect('ORIS', this.parentElement.querySelector('img').src, 59999)">Buy Now</button>
+        </div>
+        <div class="collection-item">
+          <img
+            src="https://assets.ajio.com/medias/sys_master/root/20240529/U9s9/6657307c16fd2c6e6a39bd31/-473Wx593H-700022619-black-MODEL.jpg"
+            alt="Handmade Designs"
+          />
+          <h3>
+            RAYMOND WEIL</h3>
+          <p>39,999</p>
+          <button class="btn" onclick="addToCart('RAYMOND WEIL', this.parentElement.querySelector('img').src,39999)">Add to Cart</button>
+          <button class="btn" onclick="buyNowAndRedirect('RAYMOND WEIL', this.parentElement.querySelector('img').src, 39999)">Buy Now</button>
+        </div>
+        <div class="collection-item">
+          <img
+            src="https://assets.ajio.com/medias/sys_master/root/20230421/Wtpv/6442a500907deb497af9e78d/-473Wx593H-410309538-411-MODEL.jpg"
+            alt="Handmade Designs"
+          />
+          <h3>BROOKS BROTHERS</h3>
+       <p>3,999</p>
+          <button class="btn" onclick="addToCart('BROOKS BROTHERS', this.parentElement.querySelector('img').src,3999)">Add to Cart</button>
+          <button class="btn" onclick="buyNowAndRedirect('BROOKS BROTHERS', this.parentElement.querySelector('img').src, 3999)">Buy Now</button>
+        </div>
+        <div class="collection-item">
+          <img
+            src="https://assets.ajio.com/medias/sys_master/root/20230629/sunz/649d05b3a9b42d15c92293e6/-473Wx593H-466042702-green-MODEL.jpg"
+            alt="Handmade Designs"
+          />
+          <h3>
+            NOT SO SURE</h3>
+          <p>4,999</p>
+          <button class="btn" onclick="addToCart('NOT SO SURE', this.parentElement.querySelector('img').src,4999)">Add to Cart</button>
+          <button class="btn" onclick="buyNowAndRedirect('NOT SO SURE', this.parentElement.querySelector('img').src, 4999)">Buy Now</button>
+        </div>
+        <div class="collection-item">
+          <img
+            src="https://assets.ajio.com/medias/sys_master/root/20240326/0mys/6601d92205ac7d77bbd8d754/-473Wx593H-467202665-gold-MODEL.jpg"
+            alt="Handmade Designs"
+          />
+          <h3>
+            VERSACE</h3>
+          <p>21,999</p>
+          <button class="btn" onclick="addToCart(' VERSACE', this.parentElement.querySelector('img').src,21999)">Add to Cart</button>
+          <button class="btn" onclick="buyNowAndRedirect(' VERSACE', this.parentElement.querySelector('img').src, 21999)">Buy Now</button>
+        </div>
+        <div class="collection-item">
+          <img
+            src="https://assets.ajio.com/medias/sys_master/root/20240404/ysb4/660ecd2116fd2c6e6a9dbce1/-473Wx593H-410476584-250-MODEL.jpg"
+            alt="Handmade Designs"
+          />
+          <h3>KATE SPADE</h3>
+          <p>39,999</p>
+          <button class="btn" onclick="addToCart('KATE SPADE', this.parentElement.querySelector('img').src,39999)">Add to Cart</button>
+          <button class="btn" onclick="buyNowAndRedirect('KATE SPADE', this.parentElement.querySelector('img').src, 39999)">Buy Now</button>
+        </div>
+        <div class="collection-item">
+          <img
+            src="https://assets.ajio.com/medias/sys_master/root/20240425/GVzX/662a8bbc05ac7d77bb2ccf9e/-473Wx593H-410430704-withenamel-MODEL.jpg"
+            alt="Handmade Designs"
+          />
+          <h3>AKOK</h3>
+          <p>19,999</p>
+          <button class="btn" onclick="addToCart('AKOK', this.parentElement.querySelector('img').src,19999)">Add to Cart</button>
+          <button class="btn" onclick="buyNowAndRedirect('AKOK', this.parentElement.querySelector('img').src, 19999)">Buy Now</button>
+        </div>
+        <div class="collection-item">
+          <img
+            src="https://assets.ajio.com/medias/sys_master/root/20240815/EtWM/66be30451d763220fa7cf95d/-473Wx593H-700291300-beige-MODEL.jpg"
+            alt="Handmade Designs"
+          />
+          <h3>
+            MOHEY</h3>
+          <p>15,999</p>
+          <button class="btn" onclick="addToCart('MOHEY', this.parentElement.querySelector('img').src,15999)">Add to Cart</button>
+          <button class="btn" onclick="buyNowAndRedirect('MOHEY', this.parentElement.querySelector('img').src, 15999)">Buy Now</button>
+      </div>
+       
+      <div class="collection-item">
+        <img
+          src="https://assets.ajio.com/medias/sys_master/root/20221212/2vDz/6397653daeb269659ce3fe7c/-473Wx593H-465425088-yellow-MODEL3.jpg"
+          alt="Handmade Designs"
+        />
+        <h3>
+          MASABA</h3>
+        <p>12,999</p>
+        <button class="btn" onclick="addToCart('MASABA', this.parentElement.querySelector('img').src,12999)">Add to Cart</button>
+        <button class="btn" onclick="buyNowAndRedirect('MASABA', this.parentElement.querySelector('img').src, 12999)">Buy Now</button>
+      </div>
+      <div class="collection-item">
+        <img
+          src="https://assets.ajio.com/medias/sys_master/root/20240108/VlIE/659c0ba054c30e62769b8b41/-473Wx593H-410457322-b4ha-MODEL.jpg"
+          alt="Handmade Designs"
+        />
+        <h3>
+          COACH</h3>
+        <p>4,999</p>
+        <button class="btn" onclick="addToCart('COACH', this.parentElement.querySelector('img').src,4999)">Add to Cart</button>
+        <button class="btn" onclick="buyNowAndRedirect('COACH', this.parentElement.querySelector('img').src, 4999)">Buy Now</button>
+      </div>
+      <div class="collection-item">
+        <img
+          src="https://assets.ajio.com/medias/sys_master/root/20240804/l4TG/66af81d06f60443f31e88ddf/-473Wx593H-700258562-silver-MODEL.jpg"
+          alt="Handmade Designs"
+        />
+        <h3>SWAROVSKI</h3>
+        <p>25,999</p>
+        <button class="btn" onclick="addToCart('SWAROVSKI', this.parentElement.querySelector('img').src,25999)">Add to Cart</button>
+        <button class="btn" onclick="buyNowAndRedirect('SWAROVSKI', this.parentElement.querySelector('img').src, 25999)">Buy Now</button>
+      </div>
+      <div class="collection-item">
+        <img
+          src="https://assets.ajio.com/medias/sys_master/root/20231110/Q1z6/654e47cdafa4cf41f5823f3b/-473Wx593H-4942624150-multi-MODEL.jpg"
+          alt="Handmade Designs"
+        />
+        <h3>
+          
+DAVIDOFF</h3>
+        <p>3,999</p>
+        <button class="btn" onclick="addToCart('DAVIDOFF, this.parentElement.querySelector('img').src,3999)">Add to Cart</button>
+        <button class="btn" onclick="buyNowAndRedirect('DAVIDOFF', this.parentElement.querySelector('img').src, 3999)">Buy Now</button>
+    </div>
+
+    <div class="collection-item">
+      <img
+        src="https://assets.ajio.com/medias/sys_master/root/20240408/5tol/661392c516fd2c6e6aa4168c/-473Wx593H-4943974170-multi-MODEL5.jpg"
+        alt="Handmade Designs"
+      />
+      <h3>
+        RALPH LAUREN</h3>
+      <p>1,999</p>
+      <button class="btn" onclick="addToCart('RALPH LAUREN', this.parentElement.querySelector('img').src,1999)">Add to Cart</button>
+      <button class="btn" onclick="buyNowAndRedirect('RALPH LAUREN', this.parentElement.querySelector('img').src, 1999)">Buy Now</button>
+    </div>
+    <div class="collection-item">
+      <img
+        src="https://assets.ajio.com/medias/sys_master/root/20240925/4luT/66f40805260f9c41e82739c5/-473Wx593H-4944319390-multi-MODEL.jpg"
+        alt="Handmade Designs"
+      />
+      <h3>BOSS</h3>
+      <p>4,999</p>
+      <button class="btn" onclick="addToCart('BOSS', this.parentElement.querySelector('img').src,4999)">Add to Cart</button>
+      <button class="btn" onclick="buyNowAndRedirect('BOSS', this.parentElement.querySelector('img').src, 4999)">Buy Now</button>
+    </div>
+    <div class="collection-item">
+      <img
+        src="https://m.media-amazon.com/images/I/414LQVWOhsL._SX300_SY300_QL70_FMwebp_.jpg"
+        alt="Handmade Designs"
+      />
+      <h3>boAt</h3>
+      <p>25,999</p>
+      <button class="btn" onclick="addToCart('boAt', this.parentElement.querySelector('img').src,25999)">Add to Cart</button>
+      <button class="btn" onclick="buyNowAndRedirect('boAt', this.parentElement.querySelector('img').src, 25999)">Buy Now</button>
+    </div>
+    <div class="collection-item">
+      <img
+        src="https://m.media-amazon.com/images/I/6173z+HKivL._SX522_.jpg"
+        alt="Handmade Designs"
+      />
+      <h3>
+        Nirvana Ivy</h3>
+      <p>6,999</p>
+      <button class="btn" onclick="addToCart('Nirvana Ivy', this.parentElement.querySelector('img').src,6999)">Add to Cart</button>
+      <button class="btn" onclick="buyNowAndRedirect('Nirvana Ivy', this.parentElement.querySelector('img').src, 6999)">Buy Now</button>
+  </div>
+
+  <div class="collection-item">
+    <img
+      src="https://rukminim2.flixcart.com/image/612/612/xif0q/speaker/d/d/4/-original-imah4gpdk8femzka.jpeg?q=70"
+      alt="Handmade Designs"
+    />
+    <h3>
+      boAt Aavante Bar</h3>
+    <p>27,999</p>
+    <button class="btn" onclick="addToCart('boAt Aavante Bar', this.parentElement.querySelector('img').src,27999)">Add to Cart</button>
+    <button class="btn" onclick="buyNowAndRedirect('boAt Aavante Bar', this.parentElement.querySelector('img').src, 27999)">Buy Now</button>
+  </div>
+  <div class="collection-item">
+    <img
+      src="https://m.media-amazon.com/images/I/31hNgq0MCKL._SY445_SX342_QL70_FMwebp_.jpg"
+      alt="Handmade Designs"
+    />
+    <h3>iPhone 16 Pro Max</h3>
+    <p>1,24,999</p>
+    <button class="btn" onclick="addToCart('iPhone 16 Pro Max', this.parentElement.querySelector('img').src,124999)">Add to Cart</button>
+    <button class="btn" onclick="buyNowAndRedirect('iPhone 16 Pro Max', this.parentElement.querySelector('img').src, 124999)">Buy Now</button>
+  </div>
+  <div class="collection-item">
+    <img
+      src="https://rukminim2.flixcart.com/image/312/312/xif0q/computer/z/6/w/-original-imahyf9jxfaraejh.jpeg?q=70"
+      alt="Handmade Designs"
+    />
+    <h3>Acer Predator Helios</h3>
+    <p>1,85,999</p>
+    <button class="btn" onclick="addToCart('Acer Predator Helios', this.parentElement.querySelector('img').src,185999)">Add to Cart</button>
+    <button class="btn" onclick="buyNowAndRedirect('Acer Predator Helios', this.parentElement.querySelector('img').src, 185999)">Buy Now</button>
+  </div>
+  <div class="collection-item">
+    <img
+      src="https://m.media-amazon.com/images/I/31lr3Ij6iBL._SY445_SX342_QL70_FMwebp_.jpg"
+      alt="Handmade Designs"
+    />
+    <h3>
+      iPhone 16</h3>
+    <p>99,999</p>
+    <button class="btn" onclick="addToCart('iPhone 16', this.parentElement.querySelector('img').src,99999)">Add to Cart</button>
+    <button class="btn" onclick="buyNowAndRedirect('iPhone 16', this.parentElement.querySelector('img').src, 99999)">Buy Now</button>
+</div>
+
+<div class="collection-item">
+  <img
+    src="https://m.media-amazon.com/images/I/716d-os+5-L._SX679_.jpg"
+    alt="Handmade Designs"
+  />
+  <h3>
+    Apple iPad Air 11</h3>
+  <p>87,999</p>
+  <button class="btn" onclick="addToCart(' Apple iPad Air 11', this.parentElement.querySelector('img').src,87999)">Add to Cart</button>
+  <button class="btn" onclick="buyNowAndRedirect(' Apple iPad Air 11', this.parentElement.querySelector('img').src, 87999)">Buy Now</button>
+</div>
+<div class="collection-item">
+  <img
+    src="https://m.media-amazon.com/images/I/41of44hRBqL._SX300_SY300_QL70_FMwebp_.jpg"
+    alt="Handmade Designs"
+  />
+  <h3>Apple Watch Series 8</h3>
+  <p>74,999</p>
+  <button class="btn" onclick="addToCart('Apple Watch Series 8', this.parentElement.querySelector('img').src,74999)">Add to Cart</button>
+  <button class="btn" onclick="buyNowAndRedirect('Apple Watch Series 8', this.parentElement.querySelector('img').src, 74999)">Buy Now</button>
+</div>
+<div class="collection-item">
+  <img
+    src="https://m.media-amazon.com/images/I/61oCISLE+PL._SX679_.jpg"
+    alt="Handmade Designs"
+  />
+  <h3>Apple AirPods 4</h3>
+  <p>15,999</p>
+  <button class="btn" onclick="addToCart('Apple AirPods 4', this.parentElement.querySelector('img').src,15999)">Add to Cart</button>
+  <button class="btn" onclick="buyNowAndRedirect('Apple AirPods 4', this.parentElement.querySelector('img').src, 15999)">Buy Now</button>
+</div>
+<div class="collection-item">
+  <img
+    src="https://m.media-amazon.com/images/I/71b2wUYYkwL._SX679_.jpg"
+    alt="Handmade Designs"
+  />
+  <h3>
+    Apple 2025 MacBook Air 15</h3>
+  <p>1,29,999</p>
+  <button class="btn" onclick="addToCart('Apple 2025 MacBook Air 15', this.parentElement.querySelector('img').src,129999)">Add to Cart</button>
+  <button class="btn" onclick="buyNowAndRedirect('Apple 2025 MacBook Air 15', this.parentElement.querySelector('img').src, 129999)">Buy Now</button>
+ 
+      </div>
+    </section>
+
+    <script>
+      function formatIndianPrice(price) {
+        return new Intl.NumberFormat("en-IN", {
+          style: "currency",
+          currency: "INR",
+          maximumFractionDigits: 0,
+        }).format(price);
+      }
+
+      function addToCart(productName, productImage, productPrice) {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const existingProductIndex = cart.findIndex(
+          (item) => item.name === productName
+        );
+
+        if (existingProductIndex !== -1) {
+          // Update the price if the product already exists in the cart
+          cart[existingProductIndex].price = productPrice;
+          cart[existingProductIndex].quantity += 1;
+        } else {
+          cart.push({
+            name: productName,
+            image: productImage,
+            price: productPrice,
+            quantity: 1,
+          });
+        }
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        Swal.fire({
+          title: "🛍️ Added to Cart",
+          html: `
+            <div class="custom-swal">
+              <img src="${productImage}" alt="${productName}" 
+                style="width:200px; height:250px; object-fit:cover; border-radius:8px; margin-bottom:15px;">
+              <h3 style="color:#8b7355; margin:15px 0; font-family:'Cinzel',serif;">${productName}</h3>
+              <p style="color:#8b7355; font-size:1.2em; margin:10px 0;">Price: ${formatIndianPrice(
+                productPrice
+              )}</p>
+              <p style="color:#a48a69; font-size:0.9em;">Successfully added to your cart</p>
+            </div>
+          `,
+          background: "#fff",
+          showCancelButton: true,
+          confirmButtonColor: "#8b7355",
+          cancelButtonColor: "#f6b25f",
+          confirmButtonText: "View Cart",
+          cancelButtonText: "Continue Shopping",
+          customClass: {
+            popup: "animated-popup",
+            title: "custom-title",
+            confirmButton: "custom-confirm",
+            cancelButton: "custom-cancel",
+          },
+          showClass: {
+            popup: "animate__animated animate__fadeInDown",
+          },
+          hideClass: {
+            popup: "animate__animated animate__fadeOutUp",
+          },
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "PSV-cart.html";
+          }
+        });
+      }
+
+      function buyNowAndRedirect(productName, productImage, productPrice) {
+        const orderItem = {
+          name: productName,
+          image: productImage,
+          price: productPrice,
+          quantity: 1,
+        };
+        localStorage.setItem("currentOrder", JSON.stringify([orderItem]));
+        window.location.href = "PSV-orders.html";
+      }
+    </script>
+  </body>
+</html>

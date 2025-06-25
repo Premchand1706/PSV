@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSV-login</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: "Playfair Display", serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Prevent scrollbars during animation */
+            background: linear-gradient(-45deg, #f4f4f4, #e0e0e0, #d3d3d3, #c0c0c0);
+            background-size: 400% 400%;
+            animation: gradientAnimation 10s ease infinite;
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: "Cinzel", serif;
+            font-weight: 700;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #000000;
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 14px;
+            transition: background-color 0.3s ease, color 0.3s ease; /* Add color transition */
+            border: 2px solid transparent; /* Optional: Add a border for better hover effect */
+            border-radius: 5px; /* Optional: Add border-radius for rounded corners */
+        }
+
+        .btn:hover {
+            background-color: #ffffff; /* Change background color on hover */
+            color: #000000; /* Change text color on hover */
+            border-color: #000000; /* Optional: Change border color on hover */
+            cursor: pointer; /* Change cursor to pointer to indicate it's clickable */
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* Align to the left */
+            height: 100vh;
+            padding: 20px;
+            margin-left: 2in; /* 2 inches from the left */
+        }
+
+        /* Background Animation */
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            background: url('https://static.vecteezy.com/system/resources/previews/034/105/259/non_2x/e-commerce-business-technology-it-is-selling-products-online-customers-can-order-products-all-over-the-world-smartphone-screens-with-products-placed-along-with-shopping-carts-vector.jpg') no-repeat center center/cover; /* Updated background */
+        }
+
+        /* Auth Container */
+        .auth-container {
+            flex: 1;
+            max-width: 400px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            height: 300px;
+        }
+
+        .auth-container h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .auth-container form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .auth-container input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .auth-container p {
+            font-size: 14px;
+            color: #333;
+            margin-top: 15px;
+        }
+
+        .auth-container a {
+            color: #0d9218;
+            transition: color 0.3s ease;
+        }
+
+        .auth-container a:hover {
+            color: #6b5a45;
+        }
+
+        /* Logo Styles */
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: "Cinzel", serif;
+            font-size: 32px; /* Increased font size */
+            font-weight: 700;
+            color: #b6210a; /* Changed text color to white */
+            letter-spacing: 3px;
+        }
+
+        .logo img {
+            width: 160px; /* Adjusted width for rectangular shape */
+            height: 75px; /* Adjusted height for rectangular shape */
+            border-radius: 8px; /* Optional: Slightly rounded corners */
+            box-shadow: 0 4px 6px rgba(107, 90, 69, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="animated-background">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+    </div>
+
+    <!-- Logo -->
+    <div class="logo">
+        <img src="psvlogo1.png" alt="PSV QuickBuy Logo">
+        <b>PSV QuickBuy</b>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <div class="image-container"></div>
+        <div class="auth-container">
+            <h2>Login</h2>
+            <form id="loginForm" action="psv login.php" method="POST" onsubmit="return validateLoginForm()">
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit" class="btn">Login</button>
+            </form>
+            <p>New here? No worries! <a href="PSV-signup.html"><b>Click here</b></a> to create an account.</p>
+        </div>
+    </div>
+
+    <script>
+        function redirectToHome(event) {
+            event.preventDefault(); // Prevent actual form submission
+            window.location.href = "PSV-home.html"; // Redirect to the home page
+        }
+    </script>
+</body>
+</html>
